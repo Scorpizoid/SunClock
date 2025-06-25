@@ -1,0 +1,14 @@
+MAAILMANKARTTA
+- pysyy paikoillaan
+- vaihtuu vuodenajan mukaan - neljä kuvaa: talvi, kevät, kesä ja syksy
+- vaihtumispäivämäärät:
+	- talvi 1.12.
+	- kevät 1.3.
+	- kesä 1.6.
+	- syksy 1.9
+
+MASKI
+- liikkuu vuodenajan mukaan joka 14. päivä yhden pikselin ylemmäs.
+- liikkuu vasemmalle 3,6 minuuttia per pikseli = 18 minuuttia per viisi pikseliä
+
+Maskin alla maailma on yötilassa.

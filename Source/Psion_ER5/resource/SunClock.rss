@@ -1,0 +1,235 @@
+// SunClock.RSS
+//
+
+NAME SUCL
+
+#include <eikdef.rh>
+#include <eiktbar.rh>
+#include <eikmenu.rh>
+#include <eikbutb.hrh>
+#include <eikdialg.rh>
+#include <eikmfne.rh>
+#include <eikfsel.rh>
+#include <eikclock.rh>
+#include <eikctrls.hrh>
+#include <eikchlst.rh>
+#include <eikspace.rh>
+#include <eikon.rsg>
+//#include <eikcore.rsg>
+
+#include "SunClock.hrh"
+
+RESOURCE RSS_SIGNATURE { }
+
+RESOURCE TBUF { buf=""; }
+
+RESOURCE EIK_APP_INFO
+	{
+	hotkeys=r_sunclock_hotkeys;
+	toolbar=r_sunclock_cba;//	cba=r_sunclock_cba;
+	menubar=r_sunclock_menubar;
+	}
+
+
+RESOURCE TOOLBAR r_sunclock_cba
+	{
+	flags=EEikToolBarDistributeControlsEvenlyBetweenLines;
+	controls=
+		{
+        TBAR_BUTTON
+			{
+			flags=EEikToolBarCtrlIsStretchable;
+			id=ECbaButton0;
+			txt="Arctic\nCircle";
+			},
+        TBAR_BUTTON
+			{
+			flags=EEikToolBarCtrlIsStretchable;
+			id=ECbaButton1;
+			txt="Tropic of\nCancer";
+			},
+        TBAR_BUTTON
+			{
+			flags=EEikToolBarCtrlIsStretchable;
+			id=ECbaButton2;
+			txt="Equator";
+			},
+        TBAR_BUTTON
+			{
+			flags=EEikToolBarCtrlIsStretchable;
+			id=ECbaButton3;
+			txt="Tropic of\nCapricorn";
+			},
+        TBAR_BUTTON
+			{
+			flags=EEikToolBarCtrlIsStretchable;
+			id=ECbaButton4;
+			txt="Antarctic\nCircle";
+			},
+        TBAR_BUTTON
+			{
+			flags=EEikToolBarCtrlIsStretchable;
+			id=ECbaButton5;
+			txt="EXIT";
+			},
+	TBAR_CTRL
+			{
+			type=EEikCtClock;
+			control=CLOCK { digitalresourceid=R_EIK_DIGITAL_CLOCK; analogresourceid=R_EIK_ANALOG_CLOCK; };
+			}
+		};	
+	}  
+
+
+	
+RESOURCE HOTKEYS r_sunclock_hotkeys
+    {
+	// CTRL +
+    control=
+        {
+         HOTKEY { command=EEikCmdExit; key='e'; },
+         HOTKEY { command=ESunClockSetSummerTime; key='s'; },
+         HOTKEY { command=ESunClockAbout; key='i'; }
+        };
+	// SHIFT + CTRL +
+    shift_control= 
+	{ 
+         HOTKEY { command=ESunClockViewArcticCircle; key='q'; },
+         HOTKEY { command=ESunClockViewTropicOfCancer; key='w'; },
+         HOTKEY { command=ESunClockViewEquator; key='e'; },
+         HOTKEY { command=ESunClockViewTropicOfCapricorn; key='r'; },
+         HOTKEY { command=ESunClockViewAntarcticCircle; key='t'; }
+	};
+    }
+
+
+
+
+RESOURCE MENU_BAR r_sunclock_menubar
+    {
+    titles=
+        {
+        MENU_TITLE { menu_pane=r_sunclock_file_menu; txt="File"; },
+	MENU_TITLE { menu_pane=r_sunclock_view_menu; txt="View"; },
+	MENU_TITLE { menu_pane=r_sunclock_tools_menu; txt="Tools"; },
+	MENU_TITLE { menu_pane=r_sunclock_help_menu; txt="Help"; }
+        };
+    }
+
+RESOURCE MENU_PANE r_sunclock_file_menu
+	{
+	items=
+		{
+		MENU_ITEM { command=EEikCmdExit; txt="Close"; }
+        };
+    }
+
+RESOURCE MENU_PANE r_sunclock_view_menu
+	{
+	items=
+		{
+		MENU_ITEM { command=ESunClockViewArcticCircle; txt="Arctic Circle";  flags = EEikMenuItemCheckBox | EEikMenuItemSymbolIndeterminate ;},
+		MENU_ITEM { command=ESunClockViewTropicOfCancer; txt="Tropic of Cancer";  flags = EEikMenuItemCheckBox | EEikMenuItemSymbolIndeterminate ;},
+		MENU_ITEM { command=ESunClockViewEquator; txt="Equator";  flags = EEikMenuItemCheckBox | EEikMenuItemSymbolIndeterminate ;},
+		MENU_ITEM { command=ESunClockViewTropicOfCapricorn; txt="Tropic of Capricorn";  flags = EEikMenuItemCheckBox | EEikMenuItemSymbolIndeterminate ;},
+		MENU_ITEM { command=ESunClockViewAntarcticCircle; txt="Antarctic Circle";  flags = EEikMenuItemCheckBox | EEikMenuItemSymbolIndeterminate ;}
+        };
+    }
+
+RESOURCE MENU_PANE r_sunclock_tools_menu
+	{
+	items=
+		{
+		MENU_ITEM { command=ESunClockSetSummerTime; txt="Set summer time"; }
+        };
+    }
+
+RESOURCE MENU_PANE r_sunclock_help_menu
+	{
+	items=
+		{
+		MENU_ITEM { command=ESunClockAbout; txt="About"; }
+        };
+    }
+
+
+RESOURCE TBUF r_dst_defined { buf="Daylight saving time defined"; }
+RESOURCE TBUF r_no_dst { buf="No daylight saving time in use"; }
+RESOURCE TBUF r_dst_not_defined { buf="Daylight saving time not defined"; }
+RESOURCE TBUF r_dst_updated { buf="Daylight saving time updated"; }
+RESOURCE TBUF r_dst_not_updated { buf="Daylight saving time not updated"; }
+
+
+//Resource array used in Choice list for "Use daylight saving time" 
+RESOURCE ARRAY r_choicelistarray_list_dstquestion
+    { 
+    items= 
+        { 
+        LBUF { txt="Yes"; }, 
+        LBUF { txt="No"; }
+        }; 
+    }
+
+
+RESOURCE DIALOG r_date_editor_test_dialog 
+    { 
+    title="Daylight saving time setup for this year"; 
+    buttons= R_EIK_BUTTONS_CONTINUE; //R_EIK_BUTTONS_CANCEL_OK; 
+    flags = EEikDialogFlagWait; 
+    items = { 
+        DLG_LINE 
+            { 
+            type=EEikCtChoiceList; 
+            prompt="Use daylight saving time"; 
+            id=2; 
+            //No incremental matching (user cant type in entry) 
+            //No popout (user cant select field from popout dialog) 
+            control=CHOICELIST 
+                { 
+                array_id=r_choicelistarray_list_dstquestion; 
+                flags= EEikChlistNoPopout; //Disable popout selection of items. 
+                };//End of the control. 
+            }, //End of the dialog line. 
+
+
+        DLG_LINE 
+            { 
+            type = EEikCtDateEditor; 
+            prompt = "Daylight saving time starts"; 
+            id = 0; 
+            //Minimum editor configuration. 
+             //The month/day defaults to January 1st 
+            control = DATE_EDITOR 
+                { 
+                minDate=DATE //Set the editor's lower date bound. 
+                    { 
+                    year=1990; 
+                    }; 
+                maxDate=DATE //Set the editor's upper date bound. 
+                    { 
+                    year=2050; 
+                    }; 
+                }; //End of the control. 
+            }, //End of the dialog line. 
+
+
+        DLG_LINE 
+            { 
+            type = EEikCtDateEditor; 
+            prompt = "Daylight saving time ends"; 
+            id = 1; 
+            //Editor with popout calender suppressed. 
+            control = DATE_EDITOR 
+                { 
+                minDate=DATE 
+                    { 
+                    year=1990; 
+                    }; 
+                maxDate=DATE 
+                    { 
+                    year=2050; 
+                    };
+                }; //End of the control. 
+            } //End of the dialog line. 
+        }; //End of items. 
+    } //End of the dialog resource definition.

@@ -1,0 +1,28 @@
+// SunClock.mmp
+//
+
+// using relative paths for sourcepath and user includes
+
+TARGET        SunClock.app
+TARGETTYPE    app
+UID           0x1000006c 0x2002AA23
+UNICODEUID    0x100039CE 0x2002AA22
+TARGETPATH    \system\apps\SunClock
+
+PROJECT       SunClock
+SUBPROJECT    src
+
+SOURCE        SunClock_Main.cpp
+SOURCE        SunClock_Application.cpp
+SOURCE        SunClock_Document.cpp
+SOURCE        SunClock_AppUi.cpp
+SOURCE        SunClock_AppView.cpp
+SOURCE	      MoonPhase.cpp
+
+USERINCLUDE   ..\inc ..\resource
+SYSTEMINCLUDE \epoc32\include \epoc32\include\libc // \epoc32\include\libc\arpa
+//SYSTEMINCLUDE \epoc32\include\libc\machine \epoc32\include\libc\netinet \epoc32\include\libc\sys
+
+RESOURCE      ..\resource\SunClock.rss
+LIBRARY       euser.lib apparc.lib cone.lib fbscli.lib bitgdi.lib estlib.lib
+LIBRARY       estor.lib efsrv.lib ealwl.lib ws32.lib eikon.lib

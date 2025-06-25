@@ -1,0 +1,24 @@
+// SunClock.hrh
+//
+
+enum TSunClockCbaCommands
+	{
+	ECbaButton0 = 100,
+	ECbaButton1,
+	ECbaButton2,
+	ECbaButton3,
+	ECbaButton4,
+	ECbaButton5
+	};
+
+enum TSunClockMenuCommands
+	{
+	ESunClockViewArcticCircle = 200,
+	ESunClockViewTropicOfCancer,
+	ESunClockViewEquator,
+	ESunClockViewTropicOfCapricorn,
+	ESunClockViewAntarcticCircle,
+	ESunClockSetSummerTime,
+	ESunClockAbout
+	};
+
