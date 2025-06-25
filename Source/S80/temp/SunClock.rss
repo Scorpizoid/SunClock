@@ -1,0 +1,16 @@
+#include <aiftool.rh>
+
+RESOURCE AIF_DATA
+{
+app_uid=0x2002AA23;
+caption_list=
+	{
+	CAPTION { code=ELangEnglish; caption="SunClock"; }
+	};
+
+num_icons=2;
+
+embeddability= KAppNotEmbeddable;
+hidden=KAppNotHidden;
+newfile= KAppDoesNotSupportNewFile;
+}

@@ -1,0 +1,30 @@
+;
+; Basic install file for minimal application
+;
+
+; Languages
+; none -  English only by default
+
+; Installation header
+; Only one component name as we only support English
+; UID is the app's UID
+
+#{"SunClock"},(0x2002AA23),1,2,0
+
+"C:\SunClock\group\SunClock.aif"-"!:\system\apps\SunClock\SunClock.aif"
+"C:\Symbian\6.0\NokiaCPP\Epoc32\Release\armi\urel\SunClock.rsc"-"!:\system\apps\SunClock\SunClock.rsc"
+"C:\Symbian\6.0\NokiaCPP\Epoc32\Release\armi\urel\SunClock.app"-"!:\system\apps\SunClock\SunClock.app"
+"C:\Symbian\6.0\NokiaCPP\Epoc32\Wins\c\System\Apps\SunClock\seasons.mbm"-"!:\system\apps\SunClock\seasons.mbm"
+"C:\Symbian\6.0\NokiaCPP\Epoc32\Wins\c\System\Apps\SunClock\night.mbm"-"!:\system\apps\SunClock\night.mbm"
+"C:\Symbian\6.0\NokiaCPP\Epoc32\Wins\c\System\Apps\SunClock\sunlight.mbm"-"!:\system\apps\SunClock\sunlight.mbm"
+"C:\Symbian\6.0\NokiaCPP\Epoc32\Wins\c\System\Apps\SunClock\moon_tfm.mbm"-"!:\system\apps\SunClock\moon_tfm.mbm"
+"C:\Symbian\6.0\NokiaCPP\Epoc32\Wins\c\System\Apps\SunClock\moon_tnm.mbm"-"!:\system\apps\SunClock\moon_tnm.mbm"
+
+
+
+
+; Required files
+; None
+
+; Component .sis files
+; None
