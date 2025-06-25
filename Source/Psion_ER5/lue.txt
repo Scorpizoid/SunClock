@@ -1,0 +1,107 @@
+MAAILMANKARTTA
+- pysyy paikoillaan
+- vaihtuu vuodenajan mukaan - 24 kuvaa: talvi, kev‰t, kes‰ ja syksy
+
+MASKI
+- liikkuu vasemmalle 3,6 minuuttia per pikseli = 18 minuuttia per viisi pikseli‰
+
+Maskin musta osa on p‰iv‰nvaloalue. Luodaan polygoneilla.
+
+
+
+TOTEUTUS
+
+1. tarkistetaan, mik‰ p‰iv‰ t‰n‰‰n on ja mik‰ kellonaika
+2. k‰yd‰‰n l‰pi ehtolauseita, jotka m‰‰ritt‰v‰t maailmankartan vuodenaikakuvan:
+
+if (month==december || month==january || month==february)
+	iWorldMapImage = winter.bmp;
+if (month==march || month==april || month==may)
+	iWorldMapImage = spring.bmp;
+if (month==june || month==july || month==august)
+	iWorldMapImage = summer.bmp;
+if (month==september || month==october || month==november)
+	iWorldMapImage = autumn.bmp;
+
+
+
+VAIHEET
+
+Alkutoimet:
+Asenna Sun Clock ja varmista, ett‰ se on paikallaan samassa kohdassa kuin oman ohjelman maailmankartta.
+
+1. Avataan valmiiksi tallennettu maskibittikartta, ja piirret‰‰n siihen punaisella pisteet, jotka m‰‰ritt‰v‰t piirtoalueen.
+2. Avataan Muistio ja tallennetaan pisteiden x- ja y-koordinaatit
+3. Syˆtet‰‰n koordinaatit l‰hdekoodiin, jolloin meill‰ on valmis maski.
+4. K‰‰nnet‰‰n ohjelma ja avataan se.
+5. Tarkistetaan, onko valoalue oikeassa kohdassa muuttamalla Windowsin kelloa aikaan, jota haluamme tarkistaa, ja avaamalla Sun Clockin ja muuttamalla sen aikaa siihen, mik‰ ohjelmassakin on.
+6. Tarkistetaan, montako pikseli‰ maskikuva on maailmankartan reunalta klo 00:00 (12 p.m.) avaamalla Sun Clock ko. ajankohdasta, ottamalla screenshot, pienent‰m‰ll‰ se kokoon 400 x 200 ja asettamalla maskikuva sen p‰‰lle siihen kohtaan, josta se alkaa.
+
+
+
+
+
+
+
+TODO
+
+DONE - asuinpaikkakunnan valinta - keskitet‰‰n kartta nykyiseen sijaintiin (valintoina esim. Eurooppa, Afrikka, L‰hi-It‰, Keski-Aasia, it‰-Aasia, Australia, Pohjois-Amerikka, Keski-Amerikka, Etel‰-Amerikka)
+- Auringon ja kuun sijainti kartalla silloin, kun se on t‰ysin yl‰puolella
+DONE - eri vuodenaikojen kartat
+DONE - DST-p‰ivien  dialogiin aloitusajankohtana nykyisen vuoden 1.1. p‰iv‰
+DONE - maski liikkuu itsekseen n‰ytˆll‰, ei tarvitse painaa Refresh-n‰pp‰int‰
+DONE - kes‰ajat auringonvaloaikoihin
+- menuun hotkeyt
+- auringonlasku- ja nousuajoista puuttuu 0 minuutin edest‰; jos aika on esim. 8:01, niin se tulee muotoon 8:1.
+- v‰rit ja fontit
+
+
+
+UID 0x2002AA23
+
+
+iMapPosition-muuttujan arvot
+Eurooppa: 389
+Afrikka: 379
+L‰nsi-Aasia (L‰hi-It‰): 347
+Keski-Aasia: 308
+It‰-Aasia: 264
+Australia: 252
+Oseania: 212
+Etel‰-Amerikka: 65
+Keski-Amerikka: 102
+Pohjois-Amerikka: 112
+Alaska: 170
+L‰nsi-Afrikka, Islanti: 23
+
+
+moon_tfm.mbm ei ole full.mbm:‰‰ eik‰ new.mbm:‰‰, vaan ne ovat moon_tnm.mbm-tiedostossa.
+moon_tfm.mbm-tiedostossa on 14 kuvaa, kuunsirpist‰ miltei t‰ysikuuhun + 2 ylim‰‰r‰ist‰ kuvaa; t‰ysikuu 13. kuvana ja uusikuu 14. kuvana. moon_tnm.mbm-tiedostossa on 12 kuvaa; t‰ysikuusta uuteen kuuhun.
+
+
+
+
+
+MAINOS:
+
+Here it is, folks. The app to check which part of the world is illuminated by the Sun, and to know when the sun sets and rises.
+
+This was a really educative project for me to learn about Symbian C++ and chronometry. I designed and coded the program in a way which enables you to run it continuously forever without going inaccurate. Well the summertime dialog goes invalid in 2050 but drop me a line if you need it extended when the time comes ;)
+The app only needs one thing before it begins to work accurately: the summer time (a.k.a daylight saving time) your country is using, if any.
+
+So, what is it exactly?
+It shows a map of the world with one part illuminated and one part darkened. There is also a sidebar which lets you know when the sun sets and rises, and also today's date. I'm currently implementing a moon phase widget into the sidebar (shows you how much Moon is currently illuminated) and a few other things, so watch this space!
+
+
+
+UPDATE:
+
+Now it's time for an update - v1.01. The earlier version, v1.00, had a few bugs, for example the "Change region" thing didn't really work as it works in real life :) But now the program takes your home location (which is set in the Clock application) and centers your position right there, so no need for the region change any more. Of course when the home city changes, the map's position changes as well.
+Here's a list of the changed things:
+- the Moon visibility widget which shows the current percentage as well
+- in the Menu you can now choose if you want to view the Arctic Circle, the Tropic of Cancer, the Equator, the Tropic of Capricorn and/ or the Antarctic Circle
+- sunset and sunrise times corrected a bit so when the time is e.g. 8:01, it doesn't show as "8:1 any more
+- menu hotkeys
+- changed the sidebar's font
+
+NOTE: After you've installed the new version, the program may give you an KERN-EXEC 3 error. To get rid of this error, delete the file [b]C:\System\Data\sunclock.ini[/b]. This error is due to BAD PROGRAMMING, and shouldn't happen in the next releases, if there are any :)

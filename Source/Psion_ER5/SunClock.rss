@@ -1,0 +1,230 @@
+// SunClock.RSS
+//
+
+NAME SUCL
+
+#include <eikon.rh>
+#include <eikcore.rsg>
+
+#include "SunClock.hrh"
+
+RESOURCE RSS_SIGNATURE { }
+
+RESOURCE TBUF { buf=""; }
+
+RESOURCE EIK_APP_INFO
+	{
+	hotkeys=r_sunclock_hotkeys;
+	cba=r_sunclock_cba;
+	menubar=r_sunclock_menubar;
+	}
+
+
+RESOURCE CBA r_sunclock_cba
+    {
+    breadth=80;
+    buttons=
+        {
+        CBA_BUTTON
+            {
+            id=ECbaButton0;
+            txt="";
+            bmpfile="";
+            bmpid=0xffff;
+            },
+        CBA_BUTTON
+            {
+            id=ECbaButton1;
+            txt="";
+            bmpfile="";
+            bmpid=0xffff;
+            },
+        CBA_BUTTON
+            {
+            id=ECbaButton2;
+            txt="";
+            bmpfile="";
+            bmpid=0xffff;
+            },
+        CBA_BUTTON
+            {
+            id=ECbaButton3;
+            txt="Close";
+            bmpfile="";
+            bmpid=0xffff;
+            }
+        };
+    }
+
+
+RESOURCE HOTKEYS r_sunclock_hotkeys
+    {
+    control=
+        {
+        HOTKEY { command=EEikCmdExit; key='e'; }
+        };
+    }
+
+RESOURCE MENU_BAR r_sunclock_menubar
+    {
+    titles=
+        {
+        MENU_TITLE { menu_pane=r_sunclock_file_menu; txt="File"; },
+	MENU_TITLE { menu_pane=r_sunclock_tools_menu; txt="Tools"; },
+	MENU_TITLE { menu_pane=r_sunclock_help_menu; txt="Help"; }
+        };
+    }
+
+RESOURCE MENU_PANE r_sunclock_file_menu
+	{
+	items=
+		{
+		MENU_ITEM { command=EEikCmdExit; txt="Close"; }
+        };
+    }
+
+RESOURCE MENU_PANE r_sunclock_tools_menu
+	{
+	items=
+		{
+		MENU_ITEM { command=ESunClockChangeRegion; txt="Change region"; },
+		MENU_ITEM { command=ESunClockSetSummerTime; txt="Set summer time"; }
+        };
+    }
+
+RESOURCE MENU_PANE r_sunclock_help_menu
+	{
+	items=
+		{
+		MENU_ITEM { command=ESunClockAbout; txt="About"; }
+        };
+    }
+
+
+RESOURCE TBUF r_sunclock_text_Hello   { buf="Hello World!"; }
+RESOURCE TBUF r_dst_defined { buf="Daylight saving time defined"; }
+RESOURCE TBUF r_no_dst { buf="No daylight saving time in use"; }
+RESOURCE TBUF r_dst_not_defined { buf="Daylight saving time not defined"; }
+RESOURCE TBUF r_dst_updated { buf="Daylight saving time updated"; }
+RESOURCE TBUF r_dst_not_updated { buf="Daylight saving time not updated"; }
+
+
+//Resource array used in Choice list for "Use daylight saving time" 
+RESOURCE ARRAY r_choicelistarray_list_dstquestion
+    { 
+    items= 
+        { 
+        LBUF { txt="Yes"; }, 
+        LBUF { txt="No"; }
+        }; 
+    }
+
+
+RESOURCE DIALOG r_date_editor_test_dialog 
+    { 
+    title="Daylight saving time setup"; 
+    buttons= R_EIK_BUTTONS_CONTINUE; //R_EIK_BUTTONS_CANCEL_OK; 
+    flags = EEikDialogFlagWait; 
+    items = { 
+        DLG_LINE 
+            { 
+            type=EEikCtChoiceList; 
+            prompt="Use daylight saving time"; 
+            id=2; 
+            //No incremental matching (user cant type in entry) 
+            //No popout (user cant select field from popout dialog) 
+            control=CHOICELIST 
+                { 
+                array_id=r_choicelistarray_list_dstquestion; 
+                flags= EEikChlistNoPopout; //Disable popout selection of items. 
+                };//End of the control. 
+            }, //End of the dialog line. 
+
+
+        DLG_LINE 
+            { 
+            type = EEikCtDateEditor; 
+            prompt = "Daylight saving time starts"; 
+            id = 0; 
+            //Minimum editor configuration. 
+             //The month/day defaults to January 1st 
+            control = DATE_EDITOR 
+                { 
+                minDate=DATE //Set the editor's lower date bound. 
+                    { 
+                    year=1990; 
+                    }; 
+                maxDate=DATE //Set the editor's upper date bound. 
+                    { 
+                    year=2050; 
+                    }; 
+                }; //End of the control. 
+            }, //End of the dialog line. 
+
+
+        DLG_LINE 
+            { 
+            type = EEikCtDateEditor; 
+            prompt = "Daylight saving time ends"; 
+            id = 1; 
+            //Editor with popout calender suppressed. 
+            control = DATE_EDITOR 
+                { 
+                minDate=DATE 
+                    { 
+                    year=1990; 
+                    }; 
+                maxDate=DATE 
+                    { 
+                    year=2050; 
+                    };
+                }; //End of the control. 
+            } //End of the dialog line. 
+        }; //End of items. 
+    } //End of the dialog resource definition.
+
+
+
+//Resource array used in Choice list for "Use daylight saving time" 
+RESOURCE ARRAY r_choicelistarray_list_regions
+    { 
+    items= 
+        { 
+        LBUF { txt="Europe"; }, 
+        LBUF { txt="North America"; }, 
+        LBUF { txt="Australia"; }, 
+        LBUF { txt="Western Asia"; }, 
+        LBUF { txt="Central Asia"; }, 
+        LBUF { txt="Eastern Asia"; }, 
+        LBUF { txt="South America"; }, 
+        LBUF { txt="Central America"; }, 
+        LBUF { txt="Africa"; }, 
+        LBUF { txt="Alaska"; }, 
+        LBUF { txt="West Africa and Iceland"; },
+        LBUF { txt="New Zealand and Oceania"; },
+        LBUF { txt="Default"; }
+        }; 
+    }
+
+
+RESOURCE DIALOG r_region_editor_test_dialog 
+    { 
+    title="Select the region of longitude"; 
+    buttons= R_EIK_BUTTONS_CONTINUE; //R_EIK_BUTTONS_CANCEL_OK; 
+    flags = EEikDialogFlagWait; 
+    items = { 
+        DLG_LINE 
+            { 
+            type=EEikCtChoiceList; 
+            prompt="Regional longitude"; 
+            id=0; 
+            //No incremental matching (user cant type in entry) 
+            //No popout (user cant select field from popout dialog) 
+            control=CHOICELIST 
+                { 
+                array_id=r_choicelistarray_list_regions; 
+                flags= EEikChlistNoPopout; //Disable popout selection of items. 
+                };//End of the control. 
+            } //End of the dialog line. 
+        }; //End of items. 
+    } //End of the dialog resource definition.
